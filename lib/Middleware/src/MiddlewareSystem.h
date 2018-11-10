@@ -13,14 +13,12 @@
  * @param  MiddlewareFunction The executed function with parameter of type T
  * @return                    modified T
  */
-template<typename T, short unsigned int N>
+template<class T, int N>
 class MiddlewareSystem {
 public:
     // Define the MiddlewareFunction signature
     typedef bool(*MiddlewareFunction)(T*);
-    // Ctor
     MiddlewareSystem();
-    // Dtor
     ~MiddlewareSystem();
     void add(MiddlewareFunction, char);
     void execute(T*);
@@ -35,5 +33,15 @@ private:
     // Utility
     static void shiftRight(Middleware_t*, unsigned short int);
 };
+
+template<class T, int N>
+MiddlewareSystem<T, N>::MiddlewareSystem() {
+    // CTOR
+}
+
+template<class T, int N>
+MiddlewareSystem<T, N>::~MiddlewareSystem() {
+    delete[] this->chain;
+}
 
 #endif /* end of include guard: _MIDDLEWARE_SYSTEM_H_ */
