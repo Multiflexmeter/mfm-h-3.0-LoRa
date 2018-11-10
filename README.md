@@ -5,9 +5,9 @@ This is the productional sketch for the third version of the [Multiflexmeter](ht
 The library providing LoRa communication uses an OS-timing system which presents a few constraints in the code. Therefore this sketch is specific for the LoRa version.
 
 # Table of Contents
- * [The Multiflexmeter](#The Multiflexmeter)
- * [Sketch design](#Sketch Design)
- * [License](#License)
+ * [The Multiflexmeter](#the-multiflexmeter)
+ * [Sketch design](#sketch-design)
+ * [License](#license)
 
 # The Multiflexmeter
 What is the Multiflexmeter (MFM)?
