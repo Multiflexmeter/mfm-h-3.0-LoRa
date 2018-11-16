@@ -19,10 +19,10 @@ static const u1_t PROGMEM APPKEY[16] = { ***REMOVED*** };
 void os_getDevKey (u1_t* buf) {  memcpy_P(buf, APPKEY, 16); }
 
 const lmic_pinmap lmic_pins = {
-    .nss = 6,
+    .nss = 10,
     .rxtx = LMIC_UNUSED_PIN,
-    .rst = 5,
-    .dio = {2, 3, 4},
+    .rst = 9,
+    .dio = {11, 12, 13},
 };
 
 void setup() {
