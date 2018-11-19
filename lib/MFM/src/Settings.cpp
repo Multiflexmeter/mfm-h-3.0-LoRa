@@ -1,8 +1,6 @@
 #include "Settings.h"
 
-void Settings::Initialize() {
-    Settings::eepromTail = 0;
-}
+int Settings::eepromTail = 0;
 
 int Settings::ReserveSpace(int size) {
     Settings::eepromTail += size;

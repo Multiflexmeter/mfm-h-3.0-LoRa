@@ -15,7 +15,6 @@ public:
      * @param  size The amount of bytes to reserve
      * @return a pointer to starting point of the reserves space
      */
-    static void Initialize();
     static int ReserveSpace(int size);
 private:
     static int eepromTail;
