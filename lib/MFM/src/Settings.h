@@ -16,6 +16,7 @@ public:
      * @return a pointer to starting point of the reserves space
      */
     static int ReserveSpace(int size);
+    static void Reset();
 private:
     static int eepromTail;
     // E2END defines last address

@@ -2,6 +2,10 @@
 
 int Settings::eepromTail = 0;
 
+void Settings::Reset() {
+    Settings::eepromTail = 0;
+}
+
 int Settings::ReserveSpace(int size) {
     Settings::eepromTail += size;
     if (Settings::eepromTail > EEPROM_END) {
