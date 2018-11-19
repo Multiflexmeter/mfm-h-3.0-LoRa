@@ -1,8 +1,6 @@
 #ifndef _SETTINGS_H_
 #define _SETTINGS_H_
 
-#include <EEPROMex.h>
-
 #define EEPROM_END E2END
 
 /**
