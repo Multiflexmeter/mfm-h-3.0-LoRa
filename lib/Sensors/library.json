@@ -1,0 +1,9 @@
+{
+    "name": "Sensors",
+    "authors": {
+        "name": "Tim van Osch",
+        "email": "timvosch@pollexprojects.nl",
+        "url": "https://pollexprojects.nl/"
+    },
+    "dependencies": []
+}
