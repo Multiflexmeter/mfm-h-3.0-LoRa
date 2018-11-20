@@ -17,7 +17,7 @@ struct SensorType_t {
  */
 struct SensorEntry_t {
     byte id;
-    bool disabled;
+    bool active;
     SensorType_t sensorType;
     byte pins[SENSOR_MAX_PINS];
 };
@@ -32,6 +32,7 @@ public:
     void RemoveSensor(byte id);
     bool IsActive(byte id);
     void DisableSensor(byte id);
+    void ActivateSensor(byte id);
     void ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]);
 private:
     byte nextSensorTypeId = 0;
