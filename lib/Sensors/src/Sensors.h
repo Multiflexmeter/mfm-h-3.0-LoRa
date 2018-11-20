@@ -1,30 +1,25 @@
 #ifndef _SENSORS_H_
 #define _SENSORS_H_
 
-#ifndef SENSORS_PIN_AMOUNT
-#define SENSORS_PIN_AMOUNT 4
-#endif
+#include "Config.h"
+#include "SensorHandlerBase.h"
 
-typedef unsigned char byte;
-
-/**
- * Signature of a sensor read function
+/*
+ *
  */
-typedef int(*SensorReadFunction)(byte[SENSORS_PIN_AMOUNT]);
-
-/**
- * Available sensor types
- */
-enum SensorType { ULTRASONE, DS18B20 };
+struct SensorType_t {
+    byte id;
+    SensorHandlerBase* handler;
+};
 
 /**
  * Struct for a sensor entry
  */
 struct SensorEntry_t {
-    byte Id;
-    bool Disabled;
-    SensorType Type;
-    byte Pins[SENSORS_PIN_AMOUNT];
+    byte id;
+    bool disabled;
+    SensorType_t sensorType;
+    byte pins[SENSOR_MAX_PINS];
 };
 
 /**
@@ -32,13 +27,16 @@ struct SensorEntry_t {
  */
 class Sensors {
 public:
-    void AddSensorType(SensorType type, SensorReadFunction readFunction);
-    void AddSensor(SensorType type, byte pins[SENSORS_PIN_AMOUNT]);
+    byte AddSensorType(SensorHandlerBase* handler);
+    byte AddSensor(byte sensorTypeId, byte pins[SENSOR_MAX_PINS]);
     void RemoveSensor(byte Id);
     void DisableSensor(byte Id);
-    int ReadSensor(byte Id);
-
+    void ReadSensor(byte Id, byte buffer[]);
 private:
+    byte nextSensorTypeId = 0;
+    SensorType_t sensorTypes[];
+    byte nextSensorEntryId = 0;
+    SensorEntry_t sensors[];
 };
 
 #endif /* end of include guard: _SENSORS_H_ */
