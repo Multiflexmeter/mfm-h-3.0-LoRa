@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Test native') {
       steps {
-        sh 'pio test -e native'
+        withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
+          sh 'set -x && PLATFORMIO_AUTH_TOKEN=$PIO_AUTH pio test -e native'
+        }
       }
     }
     stage('Test UNO') {
