@@ -1,6 +1,11 @@
 pipeline {
   agent any
   stages {
+    stage('Update libraries') {
+      steps {
+        sh 'pio lib install'
+      }
+    }
     stage('Test native') {
       steps {
         withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
