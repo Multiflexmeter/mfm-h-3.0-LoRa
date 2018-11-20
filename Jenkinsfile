@@ -8,7 +8,9 @@ pipeline {
     }
     stage('Test UNO') {
       steps {
-        sh 'echo "Not implmented"'
+        withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
+          sh 'pio remote --agent multiflexmeter-desktop test -e uno'
+        }
       }
     }
   }
