@@ -29,14 +29,14 @@ class Sensors {
 public:
     byte AddSensorType(SensorHandlerBase* handler);
     byte AddSensor(byte sensorTypeId, byte pins[SENSOR_MAX_PINS]);
-    void RemoveSensor(byte Id);
-    void DisableSensor(byte Id);
-    void ReadSensor(byte Id, byte buffer[]);
+    void RemoveSensor(byte id);
+    void DisableSensor(byte id);
+    void ReadSensor(byte id, byte buffer[]);
 private:
     byte nextSensorTypeId = 0;
-    SensorType_t sensorTypes[];
+    SensorType_t sensorTypes[SENSOR_MAX_TYPES];
     byte nextSensorEntryId = 0;
-    SensorEntry_t sensors[];
+    SensorEntry_t sensors[SENSOR_MAX_ENTRIES];
 };
 
 #endif /* end of include guard: _SENSORS_H_ */
