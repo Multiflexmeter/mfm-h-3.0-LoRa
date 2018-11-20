@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Update libraries') {
       steps {
-        sh 'pio lib install'
+        sh 'pio lib install file:///local/path/to/the/platform/dir'
       }
     }
     stage('Test native') {
