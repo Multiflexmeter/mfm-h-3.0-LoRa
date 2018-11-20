@@ -15,4 +15,8 @@ typedef unsigned char byte;
 #define SENSOR_MAX_ENTRIES 10
 #endif
 
+#ifndef SENSOR_READ_BUFFER_SIZE
+#define SENSOR_READ_BUFFER_SIZE 32
+#endif
+
 #endif /* end of include guard: _SENSORS_CONFIG_H_ */
