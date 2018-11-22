@@ -5,7 +5,7 @@ pipeline {
       steps {
         sshagent(credentials: ['test-server-ssh-key']) {
             configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
-              sh 'ssh $TEST_SERVER_IP -o StrictHostKeyChecking=no \'pio lib install lib/*/ && pio test -e native\''
+              sh 'ssh `cat $TEST_SERVER_IP` -o StrictHostKeyChecking=no \'pio lib install lib/*/ && pio test -e native\''
           }
         }
       }
@@ -14,7 +14,7 @@ pipeline {
       steps {
         sshagent(credentials: ['test-server-ssh-key']) {
             configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
-              sh 'ssh $TEST_SERVER_IP -o StrictHostKeyChecking=no \'pio lib install lib/*/ && pio test -e uno\''
+              sh 'ssh `cat $TEST_SERVER_IP` -o StrictHostKeyChecking=no \'pio lib install lib/*/ && pio test -e uno\''
           }
         }
       }
