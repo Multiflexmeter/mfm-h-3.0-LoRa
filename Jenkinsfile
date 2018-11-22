@@ -1,22 +1,21 @@
 pipeline {
   agent any
   stages {
-    stage('Update libraries') {
-      steps {
-        sh 'pio lib install file://lib/'
-      }
-    }
     stage('Test native') {
       steps {
-        withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
-          sh 'set -x && PLATFORMIO_AUTH_TOKEN=$PIO_AUTH pio test -e native'
+        sshagent(credentials: ['test-server-ssh-key']) {
+            configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
+              sh 'ssh $TEST_SERVER_IP -o StrictHostKeyChecking=no \'pio lib install lib/*/ && pio test -e native\''
+          }
         }
       }
     }
     stage('Test UNO') {
       steps {
-        withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
-          sh 'set -x && PLATFORMIO_AUTH_TOKEN=$PIO_AUTH pio remote --agent multiflexmeter-desktop test -e uno'
+        sshagent(credentials: ['test-server-ssh-key']) {
+            configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
+              sh 'ssh $TEST_SERVER_IP -o StrictHostKeyChecking=no \'pio lib install lib/*/ && pio test -e uno\''
+          }
         }
       }
     }
