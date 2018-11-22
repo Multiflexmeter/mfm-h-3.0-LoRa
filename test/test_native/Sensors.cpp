@@ -55,7 +55,7 @@ void test_Sensors_should_ExecuteSensorHandlerOnReading(void) {
     // Arrange
     Sensors sensors;
     TestSensorHandler handler;
-    byte sensorTypeId = sensors.AddSensorType(&handler);
+    byte sensorTypeId = sensors.AddSensorType(handler);
     byte sensorId = sensors.AddSensor(sensorTypeId, new byte[4]);
     // Act
     byte buffer[SENSOR_READ_BUFFER_SIZE];
@@ -70,7 +70,7 @@ void test_Sensors_should_DisableAndActivate(void) {
     // Arrange
     Sensors sensors;
     TestSensorHandler handler;
-    byte sensorTypeId = sensors.AddSensorType(&handler);
+    byte sensorTypeId = sensors.AddSensorType(handler);
     byte sensorId = sensors.AddSensor(sensorTypeId, new byte[4]);
     // Act & Assert
     TEST_ASSERT_EQUAL_HEX(true, sensors.IsActive(sensorId));

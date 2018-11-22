@@ -9,7 +9,7 @@
  */
 struct SensorType_t {
     byte id;
-    SensorHandlerBase* handler;
+    SensorHandlerBase &handler;
 };
 
 /**
@@ -27,7 +27,7 @@ struct SensorEntry_t {
  */
 class Sensors {
 public:
-    byte AddSensorType(SensorHandlerBase* handler);
+    byte AddSensorType(SensorHandlerBase &handler);
     byte AddSensor(byte sensorTypeId, byte pins[SENSOR_MAX_PINS]);
     void RemoveSensor(byte id);
     bool IsActive(byte id);
@@ -36,9 +36,9 @@ public:
     void ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]);
 private:
     byte nextSensorTypeId = 0;
-    SensorType_t sensorTypes[SENSOR_MAX_TYPES];
+    SensorType_t *sensorTypes[SENSOR_MAX_TYPES];
     byte nextSensorEntryId = 0;
-    SensorEntry_t sensors[SENSOR_MAX_ENTRIES];
+    SensorEntry_t *sensors[SENSOR_MAX_ENTRIES];
 };
 
 #endif /* end of include guard: _SENSORS_H_ */
