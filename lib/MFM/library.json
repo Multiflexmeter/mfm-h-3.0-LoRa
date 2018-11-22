@@ -9,6 +9,10 @@
         {
             "name": "LMIC-Arduino",
             "version": "1.5.0+arduino-2"
+        },
+        {
+            "name": "Low-Power",
+            "version": "1.6"
         }
     ]
 }
