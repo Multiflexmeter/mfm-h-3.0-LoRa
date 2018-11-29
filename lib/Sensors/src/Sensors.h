@@ -20,7 +20,7 @@ struct SensorEntry_t {
 class Sensors {
 public:
     Sensors();
-    byte AddSensorType(SensorHandlerBase &handler);
+    unsigned short AddSensorType(SensorHandlerBase &handler);
     byte AddSensor(byte sensorTypeId, byte (&pins)[SENSOR_MAX_PINS]);
     void RemoveSensor(byte id);
     bool IsActive(byte id);
