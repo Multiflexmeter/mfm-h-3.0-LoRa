@@ -1,30 +1,22 @@
 pipeline {
   agent any
   stages {
-      stage('Update remote source') {
-        steps {
-          sshagent(credentials: ['test-server-ssh-key']) {
-              configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
-                sh 'ssh `cat $TEST_SERVER_IP` -o StrictHostKeyChecking=no \'cd mfm-h-3.0-LoRa && git pull && git reset --hard && pio lib install lib/*/ \''
-            }
-          }
-        }
+    stage('Update libraries') {
+      steps {
+        sh 'pio lib install lib/*/'
       }
+    }
     stage('Test native') {
       steps {
-        sshagent(credentials: ['test-server-ssh-key']) {
-            configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
-              sh 'ssh `cat $TEST_SERVER_IP` -o StrictHostKeyChecking=no \'cd mfm-h-3.0-LoRa && pio test -e native\''
-          }
+        withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
+          sh 'set +x && PLATFORMIO_AUTH_TOKEN=$PIO_AUTH pio remote --agent multiflexmeter-desktop test -e native'
         }
       }
     }
     stage('Test UNO') {
       steps {
-        sshagent(credentials: ['test-server-ssh-key']) {
-            configFileProvider([configFile(fileId: 'test-server-ip', variable: 'TEST_SERVER_IP')]) {
-              sh 'ssh `cat $TEST_SERVER_IP` -o StrictHostKeyChecking=no \'cd mfm-h-3.0-LoRa && pio test -e uno\''
-          }
+        withCredentials([string(credentialsId: 'PIO_AUTH', variable: 'PIO_AUTH')]) {
+          sh 'set +x && PLATFORMIO_AUTH_TOKEN=$PIO_AUTH pio remote --agent multiflexmeter-desktop test -e uno'
         }
       }
     }
