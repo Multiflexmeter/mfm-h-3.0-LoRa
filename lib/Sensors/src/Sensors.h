@@ -27,15 +27,16 @@ public:
     void DisableSensor(byte id);
     void ActivateSensor(byte id);
     void ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]);
-private:
+    SensorHandlerBase &GetSensorType(unsigned short signature);
+    SensorEntry_t &GetSensor(byte id);
+
+  private:
     byte nextSensorTypeId = 0;
-    SensorHandlerBase *sensorTypes[SENSOR_MAX_TYPES];
     byte nextSensorEntryId[SENSOR_MAX_ENTRIES];
-    SensorEntry_t *sensors[SENSOR_MAX_ENTRIES];
+    SensorEntry_t *sensors[SENSOR_MAX_ENTRIES] = {0};
+    SensorHandlerBase *sensorTypes[SENSOR_MAX_TYPES] = {0};
     byte NewSensorId();
     void FreeSensorId(byte id);
-    SensorEntry_t &GetSensor(byte id);
-    SensorHandlerBase &GetSensorType(unsigned short signature);
 };
 
 #endif /* end of include guard: _SENSORS_H_ */
