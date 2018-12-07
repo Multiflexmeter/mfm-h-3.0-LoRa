@@ -21,7 +21,7 @@ class Sensors {
 public:
     Sensors();
     unsigned short AddSensorType(SensorHandlerBase &handler);
-    byte AddSensor(byte sensorTypeId, byte (&pins)[SENSOR_MAX_PINS]);
+    byte AddSensor(unsigned short sensorTypeSignature, byte (&pins)[SENSOR_MAX_PINS]);
     void RemoveSensor(byte id);
     bool IsActive(byte id);
     void DisableSensor(byte id);
