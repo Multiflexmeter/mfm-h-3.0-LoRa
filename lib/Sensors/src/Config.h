@@ -1,8 +1,6 @@
 #ifndef _SENSORS_CONFIG_H_
 #define _SENSORS_CONFIG_H_
 
-typedef unsigned char byte;
-
 #ifndef SENSOR_MAX_PINS
 #define SENSOR_MAX_PINS 4
 #endif

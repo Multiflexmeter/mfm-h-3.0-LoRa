@@ -11,6 +11,8 @@ using namespace std;
 #include "Config.h"
 #include "SensorHandlerBase.h"
 
+typedef unsigned char byte;
+
 /**
  * Struct for a sensor entry
  */
