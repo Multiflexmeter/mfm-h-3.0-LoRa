@@ -1,9 +1,11 @@
-#ifndef __POLLEX_MFM_H_
-#define __POLLEX_MFM_H_
+#ifndef _MFM_H_
+#define _MFM_H_
 
 #include <lmic.h>
 #include <hal/hal.h>
 #include <LowPower.h>
+
+#include <Sensors.h>
 
 #include "Config.h"
 
@@ -20,4 +22,4 @@ private:
     static void EnterSleep();
 };
 
-#endif /* end of include guard: __POLLEX_MFM_H_ */
+#endif /* end of include guard: _MFM_H_ */

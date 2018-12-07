@@ -54,7 +54,3 @@ void MFM::EnterSleep() {
 void MFM::Loop() {
     os_runloop_once();
 }
-
-/*
- * LMIC callback
- */
