@@ -34,8 +34,7 @@ byte Sensors::AddSensor(unsigned short sensorTypeSignature, byte *pinArray, int 
 }
 
 void Sensors::RemoveSensor(byte id) {
-    delete &this->GetSensor(id);
-    delete &this->sensors[id];
+    this->DisableSensor(id);
     this->FreeSensorId(id);
 }
 
