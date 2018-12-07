@@ -4,6 +4,8 @@
 #ifdef __COMPILE_NATIVE_
 #include <cstring>
 using namespace std;
+#else
+#include <Arduino.h>
 #endif
 
 #include "Config.h"
