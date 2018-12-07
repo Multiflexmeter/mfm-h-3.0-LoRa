@@ -11,16 +11,15 @@ osjob_t MFM::interval_job;
 /*
  * Define static functions
  */
-void MFM::Setup(unsigned long interval) {
-    interval_time = interval;
-    os_init();
-    os_setCallback(&init_job, Init);
-}
+void MFM::Setup() {
+    Settings::Reset();
 
-void MFM::Init(osjob_t *job) {
+    // Register required EEPROM space
+    MFM::LoadState(Settings::ReserveSpace(sizeof(MFMState)));
+    setupSettings();
 
-    // Start main loop
-    os_setTimedCallback(&interval_job, os_getTime() + sec2osticks(interval_time), &IntervalTrigger);
+    // Register required middleware
+    setupMiddleware(MFM::middleware);
 }
 
 void MFM::IntervalTrigger(osjob_t *job) {
