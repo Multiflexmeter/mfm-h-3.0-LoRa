@@ -36,8 +36,6 @@ void Sensors::RemoveSensor(byte id) {
 }
 
 bool Sensors::IsActive(byte id) {
-    // SensorEntry_t sensor = this->GetSensor(id);
-    // return sensor.active;
     return this->GetSensor(id).active;
 }
 
