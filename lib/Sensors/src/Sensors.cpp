@@ -18,6 +18,10 @@ byte Sensors::AddSensor(unsigned short sensorTypeSignature, byte *pinArray, int 
 {
     // Index is also the ID
     byte index = this->NewSensorId();
+
+    // If there is no space return 
+    if (index == 0xFF) return 0xFF;
+
     SensorEntry_t newSensorEntry{
         index,
         true,
