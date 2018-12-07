@@ -15,7 +15,7 @@ using namespace std;
  * Struct for a sensor entry
  */
 struct SensorEntry_t {
-    byte id;
+    byte id = 0xFF;
     bool active;
     unsigned short sensorType;
     byte pins[SENSOR_MAX_PINS];
@@ -26,7 +26,7 @@ struct SensorEntry_t {
  */
 class Sensors {
 public:
-    Sensors();
+    // Sensors();
     unsigned short AddSensorType(SensorHandlerBase &handler);
     byte AddSensor(unsigned short sensorTypeSignature, byte *pinArray, int pinArraySize);
     void RemoveSensor(byte id);
@@ -35,15 +35,15 @@ public:
     void ActivateSensor(byte id);
     void ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]);
     SensorHandlerBase &GetSensorType(unsigned short signature);
-    SensorEntry_t &GetSensor(byte id);
 
   private:
     byte nextSensorTypeId = 0;
-    byte nextSensorEntryId[SENSOR_MAX_ENTRIES];
+    bool usedSensorIds[SENSOR_MAX_ENTRIES] = {false};
     SensorEntry_t sensors[SENSOR_MAX_ENTRIES];
     SensorHandlerBase *sensorTypes[SENSOR_MAX_TYPES] = {0};
     byte NewSensorId();
     void FreeSensorId(byte id);
+    SensorEntry_t &GetSensor(byte id);
 };
 
 #endif /* end of include guard: _SENSORS_H_ */

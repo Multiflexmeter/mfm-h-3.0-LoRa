@@ -1,13 +1,6 @@
 #include "Sensors.h"
 #include <stdio.h>
 
-Sensors::Sensors() {
-    // // Populate available entry and type ids
-    for (byte i = 0; i < SENSOR_MAX_ENTRIES; i++) {
-        this->nextSensorEntryId[i] = i;
-    }
-}
-
 unsigned short Sensors::AddSensorType(SensorHandlerBase &handler) {
     byte index = this->nextSensorTypeId++;
     Sensors::sensorTypes[index] = &handler;
@@ -43,11 +36,13 @@ bool Sensors::IsActive(byte id) {
 }
 
 void Sensors::DisableSensor(byte id) {
-    (this->GetSensor(id).active) = false;
+    this->GetSensor(id).active = false;
 }
 
 void Sensors::ActivateSensor(byte id) {
-    (this->GetSensor(id).active) = true;
+    if (this->usedSensorIds[id] == true) {
+        this->GetSensor(id).active = true;
+    }
 }
 
 void Sensors::ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]) {
@@ -59,20 +54,18 @@ void Sensors::ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]) {
 }
 
 byte Sensors::NewSensorId() {
-    for (byte i = 0; i < SENSOR_MAX_ENTRIES; i++) {
-        byte id = this->nextSensorEntryId[i];
-        if (id >= 0) {
-            // Remove from array
-            this->nextSensorEntryId[i] = 0xFF;
-            // Return
-            return id;
+    byte i = 0;
+    do {
+        if (this->usedSensorIds[i] == false) {
+            this->usedSensorIds[i] = true;
+            return i;
         }
-    }
+    } while (++i < SENSOR_MAX_ENTRIES);
     return 0xFF;
 }
 
 void Sensors::FreeSensorId(byte id) {
-    this->nextSensorEntryId[id] = id;
+    this->usedSensorIds[id] = false;
 }
 
 SensorHandlerBase &Sensors::GetSensorType(unsigned short signature) {
