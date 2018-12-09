@@ -17,7 +17,7 @@ typedef unsigned char byte;
  * Struct for a sensor entry
  */
 struct SensorEntry_t {
-    byte id = 0xFF;
+    byte id;
     bool active;
     unsigned short sensorType;
     byte pins[SENSOR_MAX_PINS];
@@ -36,7 +36,7 @@ public:
     void DisableSensor(byte id);
     void ActivateSensor(byte id);
     void ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]);
-    SensorHandlerBase &GetSensorType(unsigned short signature);
+    bool GetSensorType(unsigned short signature, SensorHandlerBase & returnHandler);
 
   private:
     byte nextSensorTypeId = 0;

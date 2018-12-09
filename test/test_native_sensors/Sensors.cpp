@@ -43,7 +43,8 @@ void test_Sensors_GetSensorType_should_ReturnCorrectSensorType(void)
     TestSensorHandler handler;
     sensors.AddSensorType(handler);
     // Act
-    void *handlerPtr = (void *)&sensors.GetSensorType(0xFF01);
+    SensorHandlerBase * handlerPtr;
+    bool success = sensors.GetSensorType(0xFF01, *handlerPtr);
     // Assert
     TEST_ASSERT_EQUAL(handlerPtr, &handler);
 }

@@ -15,7 +15,7 @@ byte Sensors::AddSensor(unsigned short sensorTypeSignature, byte *pinArray, int 
     // If there is no space return 
     if (index == 0xFF) return 0xFF;
 
-    SensorEntry_t newSensorEntry{
+    SensorEntry_t newSensorEntry = {
         index,
         true,
         sensorTypeSignature,
@@ -49,8 +49,12 @@ void Sensors::ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]) {
     SensorEntry_t &sensor = this->GetSensor(id);
     if (!sensor.active) return;
 
-    SensorHandlerBase &handler = this->GetSensorType(sensor.sensorType);
-    handler.ReadSensor(sensor.pins, buffer);
+    SensorHandlerBase * handler;
+    bool success = this->GetSensorType(sensor.sensorType, *handler);
+    if (!success){
+        return;
+    }
+    (*handler).ReadSensor(sensor.pins, buffer);
 }
 
 byte Sensors::NewSensorId() {
@@ -68,16 +72,18 @@ void Sensors::FreeSensorId(byte id) {
     this->usedSensorIds[id] = false;
 }
 
-SensorHandlerBase &Sensors::GetSensorType(unsigned short signature) {
+bool Sensors::GetSensorType(unsigned short signature, SensorHandlerBase & returnHandler) {
     for (byte i = 0; i < SENSOR_MAX_TYPES; i++) {
         // Skip null references
         if (this->sensorTypes[i] == 0x00) continue;
         // De-reference pointer
         SensorHandlerBase *type = this->sensorTypes[i];
         if (type->GetSignature() == signature) {
-            return *type;
+            returnHandler = *type;
+            return true;
         }
     }
+    return false;
 }
 
 SensorEntry_t &Sensors::GetSensor(byte id) {
