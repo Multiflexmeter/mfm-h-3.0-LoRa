@@ -13,6 +13,9 @@
         {
             "name": "Low-Power",
             "version": "1.6"
+        },
+        {
+            "name": "EEPROMEx"
         }
     ]
 }
