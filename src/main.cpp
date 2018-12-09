@@ -28,15 +28,18 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Starting system module");
 
-    MFM::Setup(15);
+    MFM::Setup();
 }
 
-void SetupMiddleware(MFMMiddleware& middleware) {
+void setupMiddleware(MFMMiddleware& middleware) {
     // Setup your own middleware here, such as filters or modifiers.
 }
 
+void setupSettings() {
+
+}
+
 void loop() {
-    MFM::Loop();
 }
 
 #endif

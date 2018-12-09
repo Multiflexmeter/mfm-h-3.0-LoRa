@@ -1,6 +1,8 @@
 
 #include "MFM.h"
 
+MFMState MFM::state;
+
 /*
  * Define static functions
  */
@@ -16,6 +18,5 @@ void MFM::Setup() {
 }
 
 void MFM::LoadState(int address) {
-    EEPROMVar<MFMState> stateVar(MFM::state);
-    stateVar.restore();
+    EEPROM.readBlock(address, MFM::state);
 }

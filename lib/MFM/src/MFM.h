@@ -4,6 +4,8 @@
 #include <lmic.h>
 #include <hal/hal.h>
 #include <LowPower.h>
+#include <EEPROMex.h>
+#include <EEPROMVar.h>
 
 #include <Settings.h>
 #include <Sensors.h>
@@ -16,6 +18,7 @@ typedef MiddlewareSystem<MFM_MIDDLEWARE_CTX_TYPE, MFM_MIDDLEWARE_LENGTH> MFMMidd
 
 extern void setupMiddleware(MFMMiddleware& middleware);
 extern void setupSettings();
+
 class MFM {
 public:
     static void Setup();
@@ -23,6 +26,7 @@ public:
 private:
     static MFMState state;
     static MFMMiddleware middleware;
+    static void LoadState(int address);
 };
 
 #endif /* end of include guard: _MFM_H_ */
