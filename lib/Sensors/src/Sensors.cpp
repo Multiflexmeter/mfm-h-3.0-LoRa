@@ -1,5 +1,4 @@
 #include "Sensors.h"
-#include <stdio.h>
 
 unsigned short Sensors::AddSensorType(SensorHandlerBase &handler) {
     uint8_t index = this->nextSensorTypeId++;
@@ -72,7 +71,6 @@ SensorHandlerBase * Sensors::GetSensorType(unsigned short signature){
         // De-reference pointer
         SensorHandlerBase *type = this->sensorTypes[i];
         if (type->GetSignature() == signature) {
-            printf("found!");
             return type;
         }
     }
