@@ -1,11 +1,11 @@
 #ifndef _SENSORS_H_
 #define _SENSORS_H_
 
-#ifdef __COMPILE_NATIVE_
+#ifdef ARDUINO
+#include <Arduino.h>
+#else
 #include <cstring>
 using namespace std;
-#else
-#include <Arduino.h>
 #endif
 
 #include <stdint.h>
