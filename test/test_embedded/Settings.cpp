@@ -1,9 +1,12 @@
-#ifdef UNIT_TEST
+#include <Arduino.h>
+#include "unity.h"
 
-#include <unity.h>
+#if defined(ARDUINO) && defined(UNIT_TEST)
+
 #include <Settings.h>
 
-void test_SettingsReservation_should_StartAt0(void) {
+void test_SettingsReservation_should_StartAt0(void)
+{
     // Arrange
     Settings::Reset();
     // Act
@@ -12,7 +15,8 @@ void test_SettingsReservation_should_StartAt0(void) {
     TEST_ASSERT_EQUAL_INT(0, spaceAddr);
 }
 
-void test_SettingsReservation_should_IncreaseWithSize(void) {
+void test_SettingsReservation_should_IncreaseWithSize(void)
+{
     // Arrange
     Settings::Reset();
     // Act
@@ -25,12 +29,19 @@ void test_SettingsReservation_should_IncreaseWithSize(void) {
     TEST_ASSERT_EQUAL_INT(2 * sizeof(int), spaceAddr3);
 }
 
-int main( int argc, char **argv) {
-    // Run tests
+void setup()
+{
+    delay(2000);
+
     UNITY_BEGIN();
     RUN_TEST(test_SettingsReservation_should_StartAt0);
     RUN_TEST(test_SettingsReservation_should_IncreaseWithSize);
     UNITY_END();
+}
+
+void loop()
+{
+    // nothing to be done here.
 }
 
 #endif
