@@ -1,7 +1,6 @@
 #define SENSORS_MAX_PINS 4
 
-#include "unity.h"
-#include "unity_internals.h"
+#include <unity.h>
 #include <Sensors.h>
 #include <SensorHandlerBase.h>
 #include <stdio.h>
