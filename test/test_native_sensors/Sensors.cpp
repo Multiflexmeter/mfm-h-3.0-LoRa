@@ -82,7 +82,6 @@ void test_Sensors_ReadSensor_should_ExecuteSensorHandler(void)
 
 void test_Sensors_AddSensor_should_IncreaseId(void)
 {
-    TEST_IGNORE();
     // Arrange Act
     Sensors sensors;
     uint8_t sensorId1 = sensors.AddSensor(0, pins, 0);
@@ -97,7 +96,6 @@ void test_Sensors_AddSensor_should_IncreaseId(void)
 
 void test_Sensors_AddSensor_should_ComplyToEntryLimit(void)
 {
-    TEST_IGNORE();
     // Arrange
     Sensors sensors;
     for (uint8_t i = 0; i < SENSOR_MAX_ENTRIES; i++)
@@ -114,7 +112,6 @@ void test_Sensors_AddSensor_should_ComplyToEntryLimit(void)
 
 void test_Sensors_AddSensor_should_ReuseRemovedId(void)
 {
-    TEST_IGNORE();
     // Arrange
     Sensors sensors;
     uint8_t sensorId1 = sensors.AddSensor(0, pins, 0);
@@ -130,7 +127,6 @@ void test_Sensors_AddSensor_should_ReuseRemovedId(void)
 
 void test_Sensors_should_DisableAndActivate(void)
 {
-    TEST_IGNORE();
     // Arrange
     uint8_t pins[SENSOR_MAX_PINS];
     Sensors sensors;
@@ -147,7 +143,6 @@ void test_Sensors_should_DisableAndActivate(void)
 
 void test_Sensors_should_NotActivateUninitializedId(void)
 {
-    TEST_IGNORE();
     // Arrange
     Sensors sensors;
 
