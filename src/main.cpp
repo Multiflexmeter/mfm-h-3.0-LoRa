@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <MFM.h>
+#include <MiddlewareSystem.h>
 
 /*
  * Define LMIC specific functions
@@ -28,18 +29,12 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Starting system module");
 
-    MFM::Setup();
-}
-
-void setupMiddleware(MFMMiddleware& middleware) {
-    // Setup your own middleware here, such as filters or modifiers.
-}
-
-void setupSettings() {
-
+    MFM::Setup(15);
+    MiddlewareSystem<int, 5> middleware;
 }
 
 void loop() {
+    MFM::Loop();
 }
 
 #endif
