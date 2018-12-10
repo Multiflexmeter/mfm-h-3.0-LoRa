@@ -49,12 +49,11 @@ void Sensors::ReadSensor(uint8_t id, uint8_t (&buffer)[SENSOR_READ_BUFFER_SIZE])
     SensorEntry_t &sensor = this->GetSensor(id);
     if (!sensor.active) return;
 
-    SensorHandlerBase * handler;
-    bool success = this->GetSensorType(sensor.sensorType, *handler);
-    if (!success){
+    SensorHandlerBase * handler = this->GetSensorType(sensor.sensorType);
+    if (handler == NULL){
         return;
     }
-    (*handler).ReadSensor(sensor.pins, buffer);
+    handler->ReadSensor(sensor.pins, buffer);
 }
 
 uint8_t Sensors::NewSensorId() {
@@ -72,19 +71,18 @@ void Sensors::FreeSensorId(uint8_t id) {
     this->usedSensorIds[id] = false;
 }
 
-bool Sensors::GetSensorType(unsigned short signature, SensorHandlerBase & returnHandler) {
+SensorHandlerBase * Sensors::GetSensorType(unsigned short signature){
     for (uint8_t i = 0; i < SENSOR_MAX_TYPES; i++) {
         // Skip null references
         if (this->sensorTypes[i] == 0x00) continue;
         // De-reference pointer
         SensorHandlerBase *type = this->sensorTypes[i];
         if (type->GetSignature() == signature) {
-            returnHandler = *type;
             printf("found!");
-            return true;
+            return type;
         }
     }
-    return false;
+    return nullptr;
 }
 
 SensorEntry_t &Sensors::GetSensor(uint8_t id) {

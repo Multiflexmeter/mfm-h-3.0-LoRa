@@ -36,7 +36,7 @@ public:
     void DisableSensor(uint8_t id);
     void ActivateSensor(uint8_t id);
     void ReadSensor(uint8_t id, uint8_t (&buffer)[SENSOR_READ_BUFFER_SIZE]);
-    bool GetSensorType(unsigned short signature, SensorHandlerBase & returnHandler);
+    SensorHandlerBase *GetSensorType(unsigned short signature);
 
   private:
     uint8_t nextSensorTypeId = 0;

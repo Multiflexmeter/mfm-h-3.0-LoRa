@@ -1,3 +1,5 @@
+#define UNIT_TEST
+
 #ifdef UNIT_TEST
 
 #define SENSORS_MAX_PINS 4
@@ -43,8 +45,7 @@ void test_Sensors_GetSensorType_should_ReturnCorrectSensorType(void)
     TestSensorHandler handler;
     sensors.AddSensorType(handler);
     // Act
-    SensorHandlerBase * handlerPtr = NULL;
-    bool success = sensors.GetSensorType(0xFF01, *handlerPtr);
+    SensorHandlerBase* handlerPtr = sensors.GetSensorType(0xFF01);
     // Assert
     TEST_ASSERT_EQUAL(handlerPtr, &handler);
 }
