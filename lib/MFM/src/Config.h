@@ -1,12 +1,12 @@
-#ifndef _MFM_CONFIG_H_
-#define _MFM_CONFIG_H_
+#ifndef _mfm_config_h_
+#define _mfm_config_h_
 
-#ifndef MFM_MIDDLEWARE_CTX_TYPE
-#define MFM_MIDDLEWARE_CTX_TYPE int
-#endif
+/*
+ *
+ * The addresses in EEPROM where keys are stored.
+ */
+#define APPEUI_ADDR 0x0
+#define DEVEUI_ADDR 0x8
+#define APPKEY_ADDR 0x16
 
-#ifndef MFM_MIDDLEWARE_LENGTH
-#define MFM_MIDDLEWARE_LENGTH 10
-#endif
-
-#endif
+#endif /* end of include guard: _mfm_config_h_ */
