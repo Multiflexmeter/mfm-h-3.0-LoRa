@@ -17,7 +17,7 @@ class TestSensorHandler : public SensorHandlerBase
     {
         return 0xFF01;
     }
-    virtual void ReadSensor(byte(pins)[SENSOR_MAX_PINS], byte (&buffer)[SENSOR_READ_BUFFER_SIZE])
+    virtual void ReadSensor(uint8_t(pins)[SENSOR_MAX_PINS], uint8_t (&buffer)[SENSOR_READ_BUFFER_SIZE])
     {
         this->IsCalled = true;
         buffer[0] = 0x01;
@@ -43,7 +43,7 @@ void test_Sensors_GetSensorType_should_ReturnCorrectSensorType(void)
     TestSensorHandler handler;
     sensors.AddSensorType(handler);
     // Act
-    SensorHandlerBase * handlerPtr;
+    SensorHandlerBase * handlerPtr = NULL;
     bool success = sensors.GetSensorType(0xFF01, *handlerPtr);
     // Assert
     TEST_ASSERT_EQUAL(handlerPtr, &handler);
@@ -64,13 +64,13 @@ void test_Sensors_AddSensorType_should_ReturnCorrectSignature(void)
 void test_Sensors_ReadSensor_should_ExecuteSensorHandler(void)
 {
     // Arrange
-    byte pins[SENSOR_MAX_PINS];
+    uint8_t pins[SENSOR_MAX_PINS];
     Sensors sensors;
     TestSensorHandler handler;
     unsigned short sensorSignature = sensors.AddSensorType(handler);
-    byte sensorId = sensors.AddSensor(sensorSignature, &pins[0], SENSOR_MAX_PINS);
+    uint8_t sensorId = sensors.AddSensor(sensorSignature, &pins[0], SENSOR_MAX_PINS);
     // Act
-    byte buffer[SENSOR_READ_BUFFER_SIZE];
+    uint8_t buffer[SENSOR_READ_BUFFER_SIZE];
     sensors.ReadSensor(sensorId, buffer);
 
     // Assert
@@ -83,9 +83,9 @@ void test_Sensors_AddSensor_should_IncreaseId(void)
 {
     // Arrange Act
     Sensors sensors;
-    byte sensorId1 = sensors.AddSensor(0, 0, 0);
-    byte sensorId2 = sensors.AddSensor(0, 0, 0);
-    byte sensorId3 = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId1 = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId2 = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId3 = sensors.AddSensor(0, 0, 0);
 
     // Assert
     TEST_ASSERT_EQUAL_HEX(0, sensorId1);
@@ -97,13 +97,13 @@ void test_Sensors_AddSensor_should_ComplyToEntryLimit(void)
 {
     // Arrange
     Sensors sensors;
-    for (byte i = 0; i < SENSOR_MAX_ENTRIES; i++)
+    for (uint8_t i = 0; i < SENSOR_MAX_ENTRIES; i++)
     {
         sensors.AddSensor(0, 0, 0);
     }
     
     // Act
-    byte sensorId = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId = sensors.AddSensor(0, 0, 0);
 
     // Assert
     TEST_ASSERT_EQUAL_HEX(0xFF, sensorId);
@@ -113,12 +113,12 @@ void test_Sensors_AddSensor_should_ReuseRemovedId(void)
 {
     // Arrange
     Sensors sensors;
-    byte sensorId1 = sensors.AddSensor(0, 0, 0);
-    byte sensorId2 = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId1 = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId2 = sensors.AddSensor(0, 0, 0);
 
     // Act
     sensors.RemoveSensor(sensorId2);
-    byte sensorId3 = sensors.AddSensor(0, 0, 0);
+    uint8_t sensorId3 = sensors.AddSensor(0, 0, 0);
 
     // Assert
     TEST_ASSERT_EQUAL_HEX(sensorId2, sensorId3);
@@ -127,11 +127,11 @@ void test_Sensors_AddSensor_should_ReuseRemovedId(void)
 void test_Sensors_should_DisableAndActivate(void)
 {
     // Arrange
-    byte pins[SENSOR_MAX_PINS];
+    uint8_t pins[SENSOR_MAX_PINS];
     Sensors sensors;
     TestSensorHandler handler;
     unsigned short sensorSignature = sensors.AddSensorType(handler);
-    byte sensorId = sensors.AddSensor(sensorSignature, &pins[0], SENSOR_MAX_ENTRIES);
+    uint8_t sensorId = sensors.AddSensor(sensorSignature, &pins[0], SENSOR_MAX_ENTRIES);
     // Act & Assert
     TEST_ASSERT_EQUAL_HEX(true, sensors.IsActive(sensorId));
     sensors.DisableSensor(sensorId);

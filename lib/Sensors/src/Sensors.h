@@ -8,19 +8,19 @@ using namespace std;
 #include <Arduino.h>
 #endif
 
+#include <stdint.h>
+
 #include "Config.h"
 #include "SensorHandlerBase.h"
-
-typedef unsigned char byte;
 
 /**
  * Struct for a sensor entry
  */
 struct SensorEntry_t {
-    byte id;
+    uint8_t id;
     bool active;
     unsigned short sensorType;
-    byte pins[SENSOR_MAX_PINS];
+    uint8_t pins[SENSOR_MAX_PINS];
 };
 
 /**
@@ -30,22 +30,22 @@ class Sensors {
 public:
     // Sensors();
     unsigned short AddSensorType(SensorHandlerBase &handler);
-    byte AddSensor(unsigned short sensorTypeSignature, byte *pinArray, int pinArraySize);
-    void RemoveSensor(byte id);
-    bool IsActive(byte id);
-    void DisableSensor(byte id);
-    void ActivateSensor(byte id);
-    void ReadSensor(byte id, byte (&buffer)[SENSOR_READ_BUFFER_SIZE]);
+    uint8_t AddSensor(unsigned short sensorTypeSignature, uint8_t *pinArray, int pinArraySize);
+    void RemoveSensor(uint8_t id);
+    bool IsActive(uint8_t id);
+    void DisableSensor(uint8_t id);
+    void ActivateSensor(uint8_t id);
+    void ReadSensor(uint8_t id, uint8_t (&buffer)[SENSOR_READ_BUFFER_SIZE]);
     bool GetSensorType(unsigned short signature, SensorHandlerBase & returnHandler);
 
   private:
-    byte nextSensorTypeId = 0;
+    uint8_t nextSensorTypeId = 0;
     bool usedSensorIds[SENSOR_MAX_ENTRIES] = {false};
     SensorEntry_t sensors[SENSOR_MAX_ENTRIES];
     SensorHandlerBase *sensorTypes[SENSOR_MAX_TYPES] = {0};
-    byte NewSensorId();
-    void FreeSensorId(byte id);
-    SensorEntry_t &GetSensor(byte id);
+    uint8_t NewSensorId();
+    void FreeSensorId(uint8_t id);
+    SensorEntry_t &GetSensor(uint8_t id);
 };
 
 #endif /* end of include guard: _SENSORS_H_ */
