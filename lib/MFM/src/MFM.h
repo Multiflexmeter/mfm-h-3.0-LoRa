@@ -1,23 +1,32 @@
-#ifndef __POLLEX_MFM_H_
-#define __POLLEX_MFM_H_
+#ifndef _MFM_H_
+#define _MFM_H_
 
 #include <lmic.h>
 #include <hal/hal.h>
 #include <LowPower.h>
+#include <EEPROMex.h>
+#include <EEPROMVar.h>
+
+#include <Settings.h>
+#include <Sensors.h>
+#include <MiddlewareSystem.h>
 
 #include "Config.h"
+#include "MFMState.h"
+
+typedef MiddlewareSystem<MFM_MIDDLEWARE_CTX_TYPE, MFM_MIDDLEWARE_LENGTH> MFMMiddleware;
+
+extern void setupMiddleware(MFMMiddleware& middleware);
+extern void setupSettings();
 
 class MFM {
 public:
-    static unsigned long interval_time;
-    static void Setup(unsigned long interval);
+    static void Setup();
     static void Loop();
 private:
-    static osjob_t init_job;
-    static osjob_t interval_job;
-    static void Init(osjob_t* job);
-    static void IntervalTrigger(osjob_t* job);
-    static void EnterSleep();
+    static MFMState state;
+    static MFMMiddleware middleware;
+    static void LoadState(int address);
 };
 
-#endif /* end of include guard: __POLLEX_MFM_H_ */
+#endif /* end of include guard: _MFM_H_ */

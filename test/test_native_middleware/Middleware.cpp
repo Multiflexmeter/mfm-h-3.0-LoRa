@@ -39,7 +39,7 @@ void test_Middleware_should_ChangeContext(void) {
 int main( int argc, char **argv) {
     UNITY_BEGIN();
     RUN_TEST(test_Middleware_should_ChangeContext);
-    UNITY_END();
+    return UNITY_END();
 }
 
 #endif
