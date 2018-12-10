@@ -15,13 +15,7 @@ uint8_t Sensors::AddSensor(unsigned short sensorTypeSignature, uint8_t *pinArray
     // If there is no space return 
     if (index == 0xFF) return 0xFF;
 
-    SensorEntry_t newSensorEntry = {
-        index,
-        true,
-        sensorTypeSignature,
-        {}
-    };
-    memcpy(newSensorEntry.pins, pinArray, pinArraySize);
+    SensorEntry newSensorEntry(index, true, sensorTypeSignature, pinArray);
     this->sensors[index] = newSensorEntry;
     return index;
 }
@@ -46,7 +40,7 @@ void Sensors::ActivateSensor(uint8_t id) {
 }
 
 void Sensors::ReadSensor(uint8_t id, uint8_t (&buffer)[SENSOR_READ_BUFFER_SIZE]) {
-    SensorEntry_t &sensor = this->GetSensor(id);
+    SensorEntry &sensor = this->GetSensor(id);
     if (!sensor.active) return;
 
     SensorHandlerBase * handler = this->GetSensorType(sensor.sensorType);
@@ -85,6 +79,6 @@ SensorHandlerBase * Sensors::GetSensorType(unsigned short signature){
     return nullptr;
 }
 
-SensorEntry_t &Sensors::GetSensor(uint8_t id) {
+SensorEntry &Sensors::GetSensor(uint8_t id) {
     return this->sensors[id];
 }

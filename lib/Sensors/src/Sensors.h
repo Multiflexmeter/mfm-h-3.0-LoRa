@@ -12,16 +12,7 @@ using namespace std;
 
 #include "Config.h"
 #include "SensorHandlerBase.h"
-
-/**
- * Struct for a sensor entry
- */
-struct SensorEntry_t {
-    uint8_t id;
-    bool active;
-    unsigned short sensorType;
-    uint8_t pins[SENSOR_MAX_PINS];
-};
+#include "SensorEntry.h"
 
 /**
  * This class manages and interfaces sensors
@@ -29,6 +20,7 @@ struct SensorEntry_t {
 class Sensors {
 public:
     // Sensors();
+    // ~Sensors();
     unsigned short AddSensorType(SensorHandlerBase &handler);
     uint8_t AddSensor(unsigned short sensorTypeSignature, uint8_t *pinArray, int pinArraySize);
     void RemoveSensor(uint8_t id);
@@ -38,14 +30,14 @@ public:
     void ReadSensor(uint8_t id, uint8_t (&buffer)[SENSOR_READ_BUFFER_SIZE]);
     SensorHandlerBase *GetSensorType(unsigned short signature);
 
-  private:
+private:
     uint8_t nextSensorTypeId = 0;
     bool usedSensorIds[SENSOR_MAX_ENTRIES] = {false};
-    SensorEntry_t sensors[SENSOR_MAX_ENTRIES];
-    SensorHandlerBase *sensorTypes[SENSOR_MAX_TYPES] = {0};
+    SensorEntry sensors[SENSOR_MAX_ENTRIES] = {};
+    SensorHandlerBase *sensorTypes[SENSOR_MAX_TYPES] = {nullptr};
     uint8_t NewSensorId();
     void FreeSensorId(uint8_t id);
-    SensorEntry_t &GetSensor(uint8_t id);
+    SensorEntry &GetSensor(uint8_t id);
 };
 
 #endif /* end of include guard: _SENSORS_H_ */
