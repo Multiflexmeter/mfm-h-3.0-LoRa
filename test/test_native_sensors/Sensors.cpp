@@ -1,5 +1,3 @@
-#define UNIT_TEST
-
 #ifdef UNIT_TEST
 
 #define SENSORS_MAX_PINS 4
