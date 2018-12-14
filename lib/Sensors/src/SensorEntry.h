@@ -12,9 +12,9 @@ public:
   uint8_t id;
   bool active;
   uint16_t sensorType;
-  uint8_t * pins;
+  uint8_t pins[SENSOR_MAX_PINS];
 
-  SensorEntry(uint8_t id, bool active, uint16_t sensorType, uint8_t pins[SENSOR_MAX_PINS]);
+  SensorEntry(uint8_t id, bool active, uint16_t sensorType, uint8_t * pinArrayStart, uint8_t pinArrayLength);
   SensorEntry();
 //   ~SensorEntry(){}
 };

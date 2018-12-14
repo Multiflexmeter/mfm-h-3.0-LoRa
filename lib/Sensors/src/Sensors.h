@@ -22,7 +22,7 @@ public:
     // Sensors();
     // ~Sensors();
     unsigned short AddSensorType(SensorHandlerBase &handler);
-    uint8_t AddSensor(unsigned short sensorTypeSignature, uint8_t *pinArray, int pinArraySize);
+    uint8_t AddSensor(unsigned short sensorTypeSignature, uint8_t * pinArrayStart, uint8_t pinArrayLength);
     void RemoveSensor(uint8_t id);
     bool IsActive(uint8_t id);
     void DisableSensor(uint8_t id);
