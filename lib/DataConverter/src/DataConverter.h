@@ -13,6 +13,7 @@ public:
     DataConverter();
     uint16_t getDataSize();
     void getDataBytes(uint8_t * array);
+    bool convert(T& data);
 };
 
 #endif
