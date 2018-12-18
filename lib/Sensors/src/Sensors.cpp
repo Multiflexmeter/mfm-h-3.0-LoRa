@@ -6,7 +6,7 @@ unsigned short Sensors::AddSensorType(SensorHandlerBase &handler) {
     return handler.GetSignature();
 }
 
-uint8_t Sensors::AddSensor(unsigned short sensorTypeSignature, uint8_t *pinArray, int pinArraySize)
+uint8_t Sensors::AddSensor(unsigned short sensorTypeSignature, uint8_t * pinArrayStart, uint8_t pinArrayLength)
 {
     // Index is also the ID
     uint8_t index = this->NewSensorId();
@@ -14,7 +14,7 @@ uint8_t Sensors::AddSensor(unsigned short sensorTypeSignature, uint8_t *pinArray
     // If there is no space return 
     if (index == 0xFF) return 0xFF;
 
-    SensorEntry newSensorEntry(index, true, sensorTypeSignature, pinArray);
+    SensorEntry newSensorEntry(index, true, sensorTypeSignature, pinArrayStart, pinArrayLength);
     this->sensors[index] = newSensorEntry;
     return index;
 }

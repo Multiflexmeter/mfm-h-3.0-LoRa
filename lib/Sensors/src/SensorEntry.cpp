@@ -2,16 +2,16 @@
 
 #include <string.h>
 
-SensorEntry::SensorEntry(uint8_t id, bool active, uint16_t sensorType, uint8_t pins[SENSOR_MAX_PINS]) {
+SensorEntry::SensorEntry(uint8_t id, bool active, uint16_t sensorType,
+        uint8_t * pinArrayStart, uint8_t pinArrayLength) {
     this->id = id;
     this->active = active;
     this->sensorType = sensorType;
-    memcpy(this->pins, pins, SENSOR_MAX_PINS);
+    memcpy(this->pins, pinArrayStart, pinArrayLength);
 }
 
-SensorEntry::SensorEntry() {
+SensorEntry::SensorEntry(): pins{} {
     id = 0xFF;
     active = false;
     sensorType = 0xFFFF;
-    pins = {};
 }
