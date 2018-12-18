@@ -6,7 +6,11 @@ MFMState MFM::state;
 /*
  * Define static functions
  */
-void MFM::Setup() {
+void MFM::Setup(CommunicationSAL & communication) {
+    // Variables
+    MFM::communication = &communication;
+
+    // Space reservation
     Settings::Reset();
 
     // Register required EEPROM space
@@ -15,8 +19,16 @@ void MFM::Setup() {
     
     // Register required middleware
     setupMiddleware(MFM::middleware);
+    middleware.add(&(MFM::SendData));
 }
 
 void MFM::LoadState(int address) {
     EEPROM.readBlock(address, MFM::state);
+}
+
+bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
+    communication->activate();
+    // TODO: Convert context to byte array
+    uint8_t dataBytes[] = {0};
+    communication->send(dataBytes, 1);
 }
