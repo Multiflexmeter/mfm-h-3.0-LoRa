@@ -4,16 +4,17 @@
 #include <stdint.h>
 #include <string.h>
 
-template<class T>
 class DataConverter {
-private:
+protected:
     uint16_t dataBytesLength = 0;
-    uint8_t dataBytes[] = {};
+    uint8_t * dataBytes;
 public:
     DataConverter();
+    ~DataConverter();
     uint16_t getDataSize();
-    void getDataBytes(uint8_t * array);
-    bool convert(T& data);
+    void getDataBytes(uint8_t *array);
+    template <class T>
+    bool convert(T &data);
 };
 
 #endif
