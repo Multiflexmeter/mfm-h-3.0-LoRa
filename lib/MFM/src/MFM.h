@@ -10,7 +10,7 @@
 #include <Settings.h>
 #include <Sensors.h>
 #include <MiddlewareSystem.h>
-#include <Communication.h>
+#include <CommunicationSAL.h>
 
 #include "Config.h"
 #include "MFMState.h"

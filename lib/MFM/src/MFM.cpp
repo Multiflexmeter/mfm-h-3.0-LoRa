@@ -27,8 +27,8 @@ void MFM::LoadState(int address) {
 }
 
 bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
-    communication->activate();
+    communication->Activate();
     // TODO: Convert context to byte array
     uint8_t dataBytes[] = {0};
-    communication->send(dataBytes, 1);
+    communication->Send(dataBytes, 1);
 }

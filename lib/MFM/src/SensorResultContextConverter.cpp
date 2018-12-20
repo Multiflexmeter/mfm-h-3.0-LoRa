@@ -6,7 +6,8 @@
 using SensoResultContext_ = SensorResultContext<SENSOR_MAX_ENTRIES>;
 
 template <>
-bool DataConverter::convert < SensoResultContext_>(SensoResultContext_ &data)
+bool DataConverter::convert<SensoResultContext_>(SensoResultContext_ &data)
 {
     // Unused thus far, initial idea was huffman compression
+    return true;
 }
