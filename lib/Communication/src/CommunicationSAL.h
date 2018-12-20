@@ -5,9 +5,9 @@
 
 class CommunicationSAL {
     public:
-    virtual bool activate() = 0;
-    virtual bool deactive() = 0;
-    virtual bool send(uint8_t * data, uint16_t size) = 0;
+    virtual bool Activate() = 0;
+    virtual bool Deactivate() = 0;
+    virtual void Send(uint8_t * data, uint16_t size) = 0;
     // Will perhaps need a 'addReceiveListener' function?
 };
 
