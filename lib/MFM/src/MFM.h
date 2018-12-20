@@ -21,11 +21,9 @@ typedef MiddlewareSystem<MFM_MIDDLEWARE_CTX_TYPE, MFM_MIDDLEWARE_LENGTH> MFMMidd
 extern void setupMiddleware(MFMMiddleware& middleware);
 extern void setupSettings();
 
-class MFM {
-public:
-    static void Setup(CommunicationSAL & communication, bool automaticTrigger);
-    static void Loop();
-private:
+class MFM
+{
+  private:
     static bool automaticTrigger;
     static CommunicationSAL *communication;
     static MFMState state;
@@ -33,6 +31,9 @@ private:
     static void LoadState(int address);
     static bool SendData(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
     static bool LowPowerSleep(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
+
+  public:
+    static void Setup(CommunicationSAL &communication, bool automaticTrigger);
     static void TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
 };
 
