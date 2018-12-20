@@ -1,6 +1,9 @@
 #ifndef _MFM_LORAWAN_COMMUNICATION_H_
 #define _MFM_LORAWAN_COMMUNICATION_H_
 
+#include <lmic.h>
+#include <hal/hal.h>
+
 #include "Communication.h"
 
 class LoRaWanCommunication : public CommunicationSAL
