@@ -1,7 +1,14 @@
 #ifndef UNIT_TEST
 
 #include <Arduino.h>
+#include <hal/hal.h>
+#include <lmic.h>
 #include <MFM.h>
+
+#include <LoRaWan.h>
+#include <LoRaWanCommunication.h>
+
+
 
 /*
  * Define LMIC specific functions
@@ -24,11 +31,24 @@ const lmic_pinmap lmic_pins = {
     .dio = {11, 12, 13},
 };
 
+
+LoRaWanCommunication communication;
+
+bool FinishCycle(uint8_t & context)
+{
+    MFM::LowPowerSleep();
+    MFM::Ready();
+    return true;
+}
+
 void setup() {
     Serial.begin(9600);
     Serial.println("Starting system module");
 
-    MFM::Setup();
+    LoRaWan::Setup();
+    LoRaWan::AddListener(FinishCycle);
+
+    MFM::Setup(&communication);
 }
 
 void setupMiddleware(MFMMiddleware& middleware) {
@@ -36,10 +56,11 @@ void setupMiddleware(MFMMiddleware& middleware) {
 }
 
 void setupSettings() {
-
+    // Reserve your own EEPROM space here
 }
 
 void loop() {
+    MFM::Loop();
 }
 
 #endif
