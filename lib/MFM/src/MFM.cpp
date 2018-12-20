@@ -6,10 +6,9 @@ MFMState MFM::state;
 /*
  * Define static functions
  */
-void MFM::Setup(CommunicationSAL * communication, bool automaticTrigger = true) {
+void MFM::Setup(CommunicationSAL * communication) {
     // Variables
     MFM::communication = communication;
-    MFM::automaticTrigger = automaticTrigger;
 
     // Space reservation
     Settings::Reset();
