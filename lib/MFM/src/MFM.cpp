@@ -28,11 +28,11 @@ void MFM::LoadState(int address) {
 }
 
 bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
-    communication->activate();
+    communication->Activate();
     // INFO: For other context objects, make sure you convert them with the correct converter
     // SensorResultContextConverter converter;
     uint8_t dataBytes[] = {0};
-    communication->send(dataBytes, 1);
+    communication->Send(dataBytes, 1);
 }
 
 bool MFM::LowPowerSleep() {
