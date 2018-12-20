@@ -11,7 +11,3 @@ DataConverter::~DataConverter() {
 uint16_t DataConverter::getDataSize() {
     return this->dataBytesLength;
 }
-
-void DataConverter::getDataBytes(uint8_t * array) {
-    memcpy(array, &dataBytes, dataBytesLength);
-}
