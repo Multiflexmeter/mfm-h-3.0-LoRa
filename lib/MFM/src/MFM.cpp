@@ -6,9 +6,10 @@ MFMState MFM::state;
 /*
  * Define static functions
  */
-void MFM::Setup(CommunicationSAL & communication) {
+void MFM::Setup(CommunicationSAL & communication, bool automaticTrigger = true) {
     // Variables
     MFM::communication = &communication;
+    MFM::automaticTrigger = automaticTrigger;
 
     // Space reservation
     Settings::Reset();
@@ -20,6 +21,7 @@ void MFM::Setup(CommunicationSAL & communication) {
     // Register required middleware
     setupMiddleware(MFM::middleware);
     middleware.add(&(MFM::SendData));
+    middleware.add(&(MFM::LowPowerSleep));
 }
 
 void MFM::LoadState(int address) {
@@ -28,7 +30,24 @@ void MFM::LoadState(int address) {
 
 bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
     communication->activate();
-    // TODO: Convert context to byte array
+    // INFO: For other context objects, make sure you convert them with the correct converter
+    // SensorResultContextConverter converter;
     uint8_t dataBytes[] = {0};
     communication->send(dataBytes, 1);
+}
+
+bool MFM::LowPowerSleep(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
+    // Enter LowPower mode (Multiple of 8)
+    for (int r = state.triggerInterval; r > 0; r -= 8) {
+        LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
+    }
+    // Trigger chain
+    if (automaticTrigger) {
+        SensorResultContext<SENSOR_MAX_ENTRIES> context;
+        TriggerChain(context);
+    }
+}
+
+void MFM::TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
+    middleware.execute(context);
 }
