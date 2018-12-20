@@ -33,6 +33,7 @@ bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
     // SensorResultContextConverter converter;
     uint8_t dataBytes[] = {0};
     communication->Send(dataBytes, 1);
+    return true;
 }
 
 bool MFM::LowPowerSleep() {
@@ -40,6 +41,7 @@ bool MFM::LowPowerSleep() {
     for (int r = state.triggerInterval; r > 0; r -= 8) {
         LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
     }
+    return true;
 }
 
 void MFM::TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {

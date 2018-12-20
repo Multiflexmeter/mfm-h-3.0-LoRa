@@ -9,4 +9,5 @@ template <>
 bool DataConverter::convert<SensoResultContext_>(SensoResultContext_ &data)
 {
     // Unused thus far, initial idea was huffman compression
+    return true;
 }
