@@ -30,12 +30,12 @@ class MFM
     static MFMMiddleware middleware;
     static void LoadState(int address);
     static bool SendData(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
-    static bool LowPowerSleep();
     static void Loop();
 
   public:
     static void Setup(CommunicationSAL &communication, bool automaticTrigger);
     static void TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
+    static bool LowPowerSleep();
     static int GetTriggerInterval();
 };
 
