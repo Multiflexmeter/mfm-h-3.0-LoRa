@@ -8,7 +8,7 @@ template<class T, unsigned short int N>
 class MiddlewareSystem {
 public:
     void add(MiddlewareFunctionPtr<T>);
-    void execute(T* context);
+    void execute(T& context);
 private:
     MiddlewareChain<T,N> chain;
 };

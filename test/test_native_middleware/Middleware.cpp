@@ -3,16 +3,16 @@
 #include <unity.h>
 #include <MiddlewareSystem.h>
 
-bool middlewareFunction1(int* context) {
-    *context *= 2;
+bool middlewareFunction1(int& context) {
+    context *= 2;
     return true;
 }
-bool middlewareFunction2(int* context) {
-    *context -= 5;
+bool middlewareFunction2(int& context) {
+    context -= 5;
     return false;
 }
-bool middlewareFunction3(int* context) {
-    *context = 0;
+bool middlewareFunction3(int& context) {
+    context = 0;
     return true;
 }
 
@@ -30,7 +30,7 @@ void test_Middleware_should_ChangeContext(void) {
     system.add(&middlewareFunction1);
     system.add(&middlewareFunction2);
     system.add(&middlewareFunction3);
-    system.execute(&context);
+    system.execute(context);
 
     // Assert
     TEST_ASSERT_EQUAL_INT(15, context);
