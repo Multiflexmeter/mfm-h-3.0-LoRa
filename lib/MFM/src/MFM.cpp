@@ -9,6 +9,7 @@ MFMState MFM::state;
 void MFM::Setup(CommunicationSAL * communication) {
     // Variables
     MFM::communication = communication;
+    ready = true;
 
     // Space reservation
     Settings::Reset();
@@ -47,4 +48,15 @@ void MFM::TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
 
 int MFM::GetTriggerInterval() {
     return state.triggerInterval;
+}
+
+void MFM::Ready() {
+    ready = true;
+}
+
+void MFM::Loop(void) {
+    if (ready) {
+        SensorResultContext<SENSOR_MAX_ENTRIES> context;
+        TriggerChain(context);
+    }
 }

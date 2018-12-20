@@ -24,19 +24,20 @@ extern void setupSettings();
 class MFM
 {
   private:
-    static bool automaticTrigger;
+    static bool ready;
     static CommunicationSAL *communication;
     static MFMState state;
     static MFMMiddleware middleware;
     static void LoadState(int address);
     static bool SendData(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
-    static void Loop();
 
   public:
     static void Setup(CommunicationSAL *communication);
     static void TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
     static bool LowPowerSleep();
     static int GetTriggerInterval();
+    static void Ready();
+    static void Loop();
 };
 
 #endif /* end of include guard: _MFM_H_ */
