@@ -36,6 +36,7 @@ class MFM
   public:
     static void Setup(CommunicationSAL &communication, bool automaticTrigger);
     static void TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
+    static int GetTriggerInterval();
 };
 
 #endif /* end of include guard: _MFM_H_ */

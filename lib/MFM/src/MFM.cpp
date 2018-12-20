@@ -46,3 +46,7 @@ void MFM::TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
     middleware.execute(context);
     LowPowerSleep();
 }
+
+int MFM::GetTriggerInterval() {
+    return state.triggerInterval;
+}
