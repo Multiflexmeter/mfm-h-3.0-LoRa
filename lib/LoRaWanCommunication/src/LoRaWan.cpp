@@ -1,6 +1,8 @@
 #include "LoRaWan.h"
 
-void LoRaWan::Setup() {
+void LoRaWan::Setup(MFM_t & ctx) {
+    LoRaWan::MFMContext = ctx;
+
     os_init();
     LMIC_reset();
 
@@ -26,13 +28,13 @@ void LoRaWan::Loop() {
 void LoRaWan::Middleware(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
     // WARN:    Possible fail, because we will stay be in LowPower when this triggers.
     //          It should be scheduled forward by default.
-    os_setTimedCallback(&triggerJob, sec2osticks(MFM::GetTriggerInterval()), TriggerJob);
+    os_setTimedCallback(&triggerJob, sec2osticks(LoRaWan::MFMContext.state.triggerInterval), TriggerJob);
 }
 
 void LoRaWan::TriggerJob(osjob_t *job)
 {
     SensorResultContext<SENSOR_MAX_ENTRIES> context;
-    MFM::TriggerChain(context);
+    MFM::TriggerChain(context, LoRaWan::MFMContext);
 }
 
 void LoRaWan::AddListener(MiddlewareFunctionPtr<uint8_t> callback) {

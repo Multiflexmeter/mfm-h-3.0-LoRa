@@ -21,6 +21,7 @@ private:
     static void TriggerJob(osjob_t *job);
     static void AddListener(MiddlewareFunctionPtr<uint8_t> callback);
     static void OnReceive();
+    static MFM_t & MFMContext;
 };
 
 #endif

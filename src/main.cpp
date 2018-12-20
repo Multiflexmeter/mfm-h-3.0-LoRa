@@ -1,10 +1,10 @@
 #ifndef UNIT_TEST
 
 #include <Arduino.h>
-#include <hal/hal.h>
 #include <lmic.h>
-#include <MFM.h>
+#include <hal/hal.h>
 
+#include <MFM.h>
 #include <LoRaWan.h>
 #include <LoRaWanCommunication.h>
 
@@ -33,11 +33,12 @@ const lmic_pinmap lmic_pins = {
 
 
 LoRaWanCommunication communication;
+MFM_t MFMContext;
 
 bool FinishCycle(uint8_t & context)
 {
-    MFM::LowPowerSleep();
-    MFM::Ready();
+    MFM::LowPowerSleep(MFMContext);
+    MFMContext.ready = true;
     return true;
 }
 
@@ -45,13 +46,14 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Starting system module");
 
-    LoRaWan::Setup();
+    LoRaWan::Setup(MFMContext);
     LoRaWan::AddListener(FinishCycle);
 
-    MFM::Setup(&communication);
+    MFMContext = MFM::Setup(&communication);
 }
 
-void setupMiddleware(MFMMiddleware& middleware) {
+void setupMiddleware(MiddlewareSystem<SensorResultContext<SENSOR_MAX_ENTRIES>, 10> &middleware)
+{
     // Setup your own middleware here, such as filters or modifiers.
 }
 
@@ -60,7 +62,7 @@ void setupSettings() {
 }
 
 void loop() {
-    MFM::Loop();
+    MFM::Loop(MFMContext);
 }
 
 #endif
