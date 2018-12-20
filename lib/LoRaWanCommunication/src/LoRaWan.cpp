@@ -35,12 +35,14 @@ void LoRaWan::TriggerJob(osjob_t *job)
     MFM::TriggerChain(context);
 }
 
-void LoRaWan::AddListener(MiddlewareFunctionPtr<void> callback) {
+void LoRaWan::AddListener(MiddlewareFunctionPtr<uint8_t> callback) {
     middleware.add(callback);
 }
 
 void LoRaWan::OnReceive() {
-    middleware.execute(nullptr);
+    // TODO: pass struct with received data as context
+    uint8_t r;
+    middleware.execute(r);
 }
 
 // LMIC events
