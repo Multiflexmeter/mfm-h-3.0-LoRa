@@ -21,7 +21,6 @@ void MFM::Setup(CommunicationSAL & communication, bool automaticTrigger = true) 
     // Register required middleware
     setupMiddleware(MFM::middleware);
     middleware.add(&(MFM::SendData));
-    middleware.add(&(MFM::LowPowerSleep));
 }
 
 void MFM::LoadState(int address) {
@@ -36,18 +35,14 @@ bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
     communication->send(dataBytes, 1);
 }
 
-bool MFM::LowPowerSleep(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
+bool MFM::LowPowerSleep() {
     // Enter LowPower mode (Multiple of 8)
     for (int r = state.triggerInterval; r > 0; r -= 8) {
         LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
-    }
-    // Trigger chain
-    if (automaticTrigger) {
-        SensorResultContext<SENSOR_MAX_ENTRIES> context;
-        TriggerChain(context);
     }
 }
 
 void MFM::TriggerChain(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
     middleware.execute(context);
+    LowPowerSleep();
 }
