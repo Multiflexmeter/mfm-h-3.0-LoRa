@@ -35,12 +35,20 @@ void LoRaWan::TriggerJob(osjob_t *job)
     MFM::TriggerChain(context);
 }
 
+void LoRaWan::AddListener(MiddlewareFunctionPtr<void> callback) {
+    middleware.add(callback);
+}
+
+void LoRaWan::OnReceive() {
+    middleware.execute(nullptr);
+}
+
 // LMIC events
 void onEvent(ev_t ev)
 {
     switch(ev) {
         case EV_TXCOMPLETE:
-            // Fire receive chain
+            LoRaWan::OnReceive();
             break;
     }
 }
