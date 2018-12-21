@@ -1,12 +1,14 @@
 
 #include "LoRaWanCommunication.h"
 
-bool LoRaWanCommunication::Activate() {
-
+bool LoRaWanCommunication::Activate()
+{
+    return true;
 }
 
-bool LoRaWanCommunication::Deactivate() {
-
+bool LoRaWanCommunication::Deactivate()
+{
+    return true;
 }
 
 void LoRaWanCommunication::Send(uint8_t * data, uint16_t length) {

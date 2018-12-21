@@ -12,6 +12,6 @@ public:
     virtual bool Activate();
     virtual bool Deactivate();
     virtual void Send(uint8_t *data, uint16_t size);
-}
+};
 
 #endif
