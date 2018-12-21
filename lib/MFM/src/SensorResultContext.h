@@ -7,7 +7,6 @@
 
 class SensorResult {
 public:
-    SensorResult();
     uint16_t sensorType = 0xFFFF;
     uint8_t sensorId = 0xFF;
     uint8_t result[SENSOR_READ_BUFFER_SIZE] = {0};
