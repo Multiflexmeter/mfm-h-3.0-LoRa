@@ -3,7 +3,7 @@
 
 struct MFMState
 {
-    int triggerInterval = 10;
+    int triggerInterval = 30;
 };
 
 

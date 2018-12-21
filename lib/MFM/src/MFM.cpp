@@ -2,6 +2,8 @@
 #include "MFM.h"
 
 MFMState MFM::state;
+MFMMiddleware MFM::middleware;
+CommunicationSAL * MFM::communication = NULL;
 
 /*
  * Define static functions
@@ -22,7 +24,23 @@ void MFM::Setup(CommunicationSAL & communication) {
     middleware.add(&(MFM::SendData));
 }
 
-void MFM::LoadState(int address) {
+bool MFM::ReadSensors(SensorResultContext<SENSOR_MAX_ENTRIES> &context) {
+
+    return true;
+}
+
+void MFM::Loop() {
+    
+}
+
+void MFM::StartCycle()
+{
+    SensorResultContext<SENSOR_MAX_ENTRIES> ctx;
+    middleware.execute(ctx);
+}
+
+void MFM::LoadState(int address)
+{
     EEPROM.readBlock(address, MFM::state);
 }
 
@@ -31,4 +49,25 @@ bool MFM::SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context) {
     // TODO: Convert context to byte array
     uint8_t dataBytes[] = {0};
     communication->Send(dataBytes, 1);
+    return true;
+}
+
+void MFM::DisableHardwarePower()
+{
+
+}
+
+void MFM::EnableHardwarePower()
+{
+
+}
+
+bool MFM::EndCycle(ReceiveContext_t &data)
+{
+    DisableHardwarePower();
+    return true;
+}
+
+int MFM::GetInterval() {
+    return state.triggerInterval;
 }

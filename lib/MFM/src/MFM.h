@@ -24,13 +24,19 @@ extern void setupSettings();
 class MFM {
 public:
     static void Setup(CommunicationSAL & communication);
+    static void StartCycle();
     static void Loop();
+    static void DisableHardwarePower();
+    static void EnableHardwarePower();
+    static bool EndCycle(ReceiveContext_t & data);
+    static int GetInterval();
 private: 
     static CommunicationSAL * communication;
     static MFMState state;
     static MFMMiddleware middleware;
     static void LoadState(int address);
     static bool SendData(SensorResultContext<SENSOR_MAX_ENTRIES>& context);
+    static bool ReadSensors(SensorResultContext<SENSOR_MAX_ENTRIES> &context);
 };
 
 #endif /* end of include guard: _MFM_H_ */
